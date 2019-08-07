@@ -20,21 +20,23 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(logger('combined', { stream: accessLogStream }));
+if(!process.env.MONGODB){
+  console.log('You\'ve not set the db link in .env');
+}else{
+  // this is our MongoDB database
+  const dbRoute = process.env.MONGODB;
 
-// this is our MongoDB database
-const dbRoute = ;
-
-// connects our back end code with the database
-mongoose.connect(
-  dbRoute,
-  { useNewUrlParser: true }
-);
+  // connects our back end code with the database
+  mongoose.connect(dbRoute, { useNewUrlParser: true })
+    .catch(e => {
+      console.log('Start your database or check the connection!')
+    });
+}
 
 let db = mongoose.connection;
 
 // Routes
 require('./routes/index.js')(router);
-
 
 // append /api for our http requests
 app.use("/", router);
