@@ -19,6 +19,11 @@ app.use(Cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+/*
+  Set mongo link in .env, get database from mlab for testing or
+  install mongo on localhost
+*/
+
 app.use(logger('combined', { stream: accessLogStream }));
 if(!process.env.MONGODB){
   console.log('You\'ve not set the db link in .env');
