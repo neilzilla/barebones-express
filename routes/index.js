@@ -1,5 +1,6 @@
 const Axios = require('axios');
 const schemas = require('../schema');
+const passport = require('../lib/passport');
 /*
   Auth functions for use in routes
   const auth = require('../lib/passport');
@@ -23,10 +24,20 @@ module.exports = (router) => {
 
   console.log('setting routes');
   router.get('/test', async (req, res, next) => {
-    const reg = await auth.login('neil1', 'password1');
-    console.log(reg);
+    console.log(req);
     res.send('hello');
   });
+
+  router.get('/login', async (req, res) =>{
+    passport.login('neil5000', 'password')
+      .then(resp => {
+        res.json(resp);
+      })
+      .catch(err => {
+        res.json(err);
+      })
+
+  })
 
   /* import routes
     eg. require('./routepath')(router);
